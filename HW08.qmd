@@ -1,0 +1,524 @@
+---
+title: "Homework8"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+### import all the libraries
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+#install.packages("corrr")
+#install.packages("tidymodels")
+library(corrr)
+library(tidymodels)
+```
+
+# Reading Data
+
+```{r}
+bike_data <- read_csv("https://www4.stat.ncsu.edu/~online/datasets/SeoulBikeData.csv", skip = 1, locale = locale(encoding = "UTF-8"), col_names = FALSE)|>
+  as_tibble()
+head(bike_data)
+```
+
+### Rename the column name
+
+```{r}
+colnames(bike_data) <- c("Date", "Rented_Bike_Count", "Hour", "Temperature","Humidity", "Windspeed", "Visibility","Dew_Point_Temperature", "Solar_Radiation", "Rainfall", "Snowfall", "Seasons", "Holiday", "Functioning_Day")
+head(bike_data)
+```
+
+## EDA
+
+-  1.  Checking the Data
+
+-   check for missing values(Here is no missing values)
+
+```{r}
+sum(is.na(bike_data))
+
+
+```
+
+```{r}
+colSums(is.na(bike_data))
+
+```
+
+### 2. Check the column types and the values within the columns to make sure they make sense (basic summary stats for numeric columns and check the unique values for the categorical variables).
+
+```{r}
+str(bike_data)
+```
+
+### summary stats for numeric columns
+
+```{r}
+numeric_stats <- bike_data |>
+  select_if(is.numeric) |>
+  summary()
+print(numeric_stats)
+```
+
+### check the unique values for the categorical variables
+
+-   unique season values
+
+```{r}
+unique_season <- bike_data |>
+  pull(Seasons) |>
+  unique()
+print(unique_season)
+```
+
+### unique holiday values
+
+```{r}
+unique_holidy <- bike_data |>
+  pull(Holiday) |>
+  unique()
+print(unique_holidy)
+```
+
+### unique Functioning Day
+
+```{r}
+unique(bike_data$Functioning_Day)
+```
+
+### Convert the Date column into an actual date
+
+```{r}
+bike_data <- bike_data |>
+  mutate(
+    # Convert the Date column into an actual date
+    Date = dmy(Date),
+    # Turn the character variables (Seasons, Holiday, and Functioning Day) into factors.
+    Seasons = as.factor(Seasons),
+    Holiday = as.factor(Holiday),
+    Functioning_Day = as.factor(Functioning_Day)
+
+  )
+
+```
+
+-   see the structure of the data
+
+```{r}
+str(bike_data)
+```
+
+### Create summary statistics across categorical variables
+
+```{r}
+bike_data_summary <- bike_data |>
+  filter(Functioning_Day == "Yes") |>
+  group_by(Seasons, Holiday) |>
+  summarize(
+    Rented_Bike_Count_mean = mean(Rented_Bike_Count),
+    Rented_Bike_Count_sd = sd(Rented_Bike_Count),
+    Rented_Bike_Count_median = median(Rented_Bike_Count),
+    .groups = "drop"
+  )
+bike_data_summary
+
+```
+
+### We make a graph for the Functioning Day but here is no No holiday
+
+```{r}
+ggplot(bike_data, aes(x = Seasons, y = Rented_Bike_Count, fill = Functioning_Day)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Mean Bike Rentals by Seasons and Holiday",
+    x = "Season",
+    y = "Mean Bike Rentals",
+    fill = "Holiday"
+  ) +
+  theme_minimal()
+
+```
+
+-   Show it in graph
+* here we see the mean of bike rentals by seasons and Holiday
+
+```{r}
+ggplot(bike_data_summary, aes(x = Seasons, y = Rented_Bike_Count_mean, fill = Holiday)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Mean Bike Rentals by Seasons and Holiday",
+    x = "Season",
+    y = "Mean Bike Rentals",
+    fill = "Holiday"
+  ) +
+  theme_minimal()
+
+```
+
+## Draw graph to see the Mean of bike rentals by season and Holiday
+
+Note :-- Here is nothing in the Functioning Day column, all are Yes only.
+
+```{r}
+ggplot(bike_data, aes(x = Seasons, y = Rented_Bike_Count, fill = Functioning_Day)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Mean Bike Rentals by Seasons and Holiday",
+    x = "Season",
+    y = "Mean Bike Rentals",
+    fill = "Holiday"
+  ) +
+  theme_minimal()
+```
+
+7.  To simplify our analysis, we’ll summarize across the hours so that each day has one observation associated with it. • Let’s group_by() the date, seasons, and holiday variables. • Find the sum of the bike_count, rainfall, and snowfall variables • Find the mean of all the weather related variables. • This will be our new data that we’ll analyze!
+
+```{r}
+summarize_bike_hour <- bike_data |>
+  group_by(Date, Seasons, Holiday) |>
+  # sum of bike_count, rainfall and snowfall
+  summarize(
+    Rented_Bike_sum = sum(Rented_Bike_Count),
+    Rainfall_sum = sum(Rainfall),
+    Snowfall_sum = sum(Snowfall),
+    Temperature_mean = mean(Temperature),
+    Humidity_mean = mean(Humidity),
+    Windspeed_mean = mean(Windspeed),
+    Visibility_mean = mean(Visibility),
+    Dew_Point_Temperature_mean = mean(Dew_Point_Temperature),
+    Solar_Radiation_mean = mean(Solar_Radiation),
+    Rainfall_mean = mean(Rainfall),
+    Snowfall_mean = mean(Snowfall),
+ #`summarize()` has grouped output by 'Date', 'Seasons'. You can override using the `.groups` argument.
+    .groups = "drop"
+  )
+```
+## Final Data for analyzing 
+```{r}
+print(summarize_bike_hour)
+```
+## 8. Recreate your basic summary stats and then create some plots to explore relationships.
+* Report correlation between your numeric variables as well.
+
+### # check the Bike rentals vs. Temperature by Season
+
+```{r}
+ggplot(summarize_bike_hour , aes(x= Temperature_mean, y = Rented_Bike_sum, color = Seasons)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "blue")+
+  labs(title = "Bike Rentals count vs. Temperature by Season", 
+       x = "Temperature (°C)",
+       y = "Rented Bike Count") +
+  theme_minimal()
+```
+### check Bike rentals vs. Windspeed
+```{r}
+ggplot(summarize_bike_hour, aes(x = Windspeed_mean, y = Rented_Bike_sum)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "Red") +
+  labs(title = "Bike Rentals vs. Windspeed",
+       x = "Windspeed (Km/h)", y = "Rented Bike Count")
+
+```
+### Check Bike rental vs. Rainfall
+```{r}
+ggplot(summarize_bike_hour, aes(x = Rainfall_sum, y = Rented_Bike_sum)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", color = "Red") +
+  labs(title = "Bike Rentals vs. Rainfall",
+       x = "Rainfall (mm)",
+       y = "Rented Bike Count") +
+  theme_minimal()
+
+```
+
+# correlation between your numeric variables as well.
+```{r}
+# summarize_bike_hour <- summarize_bike_hour |>
+#   mutate(across(c(Rented_Bike_sum, Temperature_mean, Humidity_mean, Windspeed_mean, Visibility_mean), as.numeric)) |>
+#   drop_na(Rented_Bike_sum, Temperature_mean, Humidity_mean, Windspeed_mean, Visibility_mean)
+
+
+corr_bike_data <- summarize_bike_hour |>
+  select(Rented_Bike_sum, Temperature_mean, Humidity_mean, Windspeed_mean, Visibility_mean) |>
+  correlate(method = "pearson", use = "pairwise.complete.obs")
+
+print(corr_bike_data)
+
+```
+### Numeric variables in rplot() output
+```{r}
+rplot(corr_bike_data, .order = "alphabet")
+```
+*  Showing the covariance values rather than correlations
+```{r}
+corr_bike <- summarize_bike_hour |>
+  select(Rented_Bike_sum, Temperature_mean, Humidity_mean, Windspeed_mean, Visibility_mean)
+cov_df <- colpair_map(corr_bike, stats::cov)
+cov_df |>
+  shave()
+```
+# Step 2
+# Split the Data 
+
+### Use functions from tidymodels to split the data into a training and test set (75/25 split). Use the strata argument to stratify the split on the seasons variable.
+
+```{r}
+bike_split <- initial_split(summarize_bike_hour, prop = 0.75, strata = Seasons)
+bike_train <- training(bike_split)
+bike_test <- testing(bike_split)
+print(bike_split)
+
+```
+# Fitting ML Models:--
+## 1st Recipe:--
+#Let’s ignore the date variable for modeling (so we’ll need to remove that or give it a different ID)
+#but use it to create a weekday/weekend (factor) variable. 
+#You can use step_date() then step_mutate() with a factor(if_else(...)) to create the variable.
+#I then had to remove the intermediate variable created.)
+• Let’s standardize the numeric variables since their scales are pretty different.
+• Let’s create dummy variables for the seasons, holiday, and our new day type variable
+
+
+```{r}
+# Ensure 'Date' is properly converted in 'bike_train'
+bike_train <- bike_train |>
+  mutate(Date = as.Date(Date, format = "%Y-%m-%d"))
+```
+## Recipe 1
+```{r}
+recipe_1 <- recipe(Rented_Bike_sum ~ ., data = bike_train) |>
+  step_mutate(day_type = factor(if_else(wday(Date) %in% c(1, 7), "weekend", "weekday"))) |>
+  step_rm(Date) |>
+  step_normalize(all_numeric(), -all_outcomes()) |>
+  step_dummy(Seasons, Holiday, day_type)
+
+recipe_1_prepped <- prep(recipe_1, training = bike_train)
+bike_train_transformed1 <- bake(recipe_1_prepped, new_data = NULL)
+
+# Display the transformed data to confirm
+head(bike_train_transformed1)
+
+```
+## 2nd recipe:
+• Do the same steps as above.
+• Add in interactions between seasons and holiday, seasons and temp, temp and rainfall.
+
+```{r}
+# Step 1: Create the recipe with dummy variables
+# recipe_2 <- recipe(Rented_Bike_sum ~ ., data = bike_train) |>
+#   step_mutate(day_type = factor(if_else(wday(Date) %in% c(1, 7), "weekend", "weekday"))) |>
+#   step_rm(Date) |>
+#   step_normalize(all_numeric(), -all_outcomes()) |>
+#   step_dummy(Seasons, Holiday, day_type)  # Create dummies for these variables
+# 
+# # Step 2: Manually extract the names of the dummy variables generated by `step_dummy()`
+# dummy_vars <- colnames(bake(recipe_2, new_data = NULL)) # Extract column names
+# 
+# # Step 3: Use `starts_with()` to create interactions between the dummy variables
+# recipe_2 <- recipe_2 |>
+#   step_interact(terms = ~ starts_with("Seasons") * starts_with("Holiday") + 
+#                   starts_with("Seasons") * Temperature_mean + 
+#                   Temperature_mean * Rainfall_sum)
+# 
+# # Step 4: Prep and bake the recipe
+# recipe_2_prepped <- prep(recipe_2, training = bike_train)
+# bike_train_transformed <- bake(recipe_2_prepped, new_data = NULL)
+# 
+# 
+# print(bike_train_transformed)
+
+```
+
+
+```{r}
+# Step 1: Define the recipe with dummy variables and interactions
+recipe_2 <- recipe(Rented_Bike_sum ~ ., data = bike_train) |>
+  step_mutate(day_type = factor(if_else(wday(Date) %in% c(1, 7), "weekend", "weekday"))) |>
+  step_rm(Date) |>
+  step_normalize(all_numeric(), -all_outcomes()) |>
+  step_dummy(Seasons, Holiday, day_type) |>  # Create dummies for these variables
+  step_interact(terms = ~ starts_with("Seasons") * starts_with("Holiday") + 
+                  starts_with("Seasons") * Temperature_mean + 
+                  Temperature_mean * Rainfall_sum)
+
+# Step 2: Prepare the recipe (prep)
+recipe_2_prepped <- prep(recipe_2, training = bike_train)
+
+# Step 3: Apply the recipe to transform the training data (bake)
+bike_train_transformed <- bake(recipe_2_prepped, new_data = NULL)
+
+# View the transformed data
+print(bike_train_transformed)
+
+```
+
+## For the 3rd recipe:
+  • Do the same as the 2nd recipe.
+  • Add in quadratic terms for each numeric predictor
+```{r}
+recipe_3 <- recipe(Rented_Bike_sum ~ ., data = bike_train) |>
+  step_mutate(day_type = factor(if_else(wday(Date) %in% c(1, 7), "weekend", "weekday"))) |>
+  step_rm(Date) |>
+  step_normalize(all_numeric(), -all_outcomes()) |>
+  step_dummy(Seasons, Holiday, day_type) |>
+  step_interact(terms = ~ starts_with("Seasons") * starts_with("Holiday") + 
+                  starts_with("Seasons") * Temperature_mean + 
+                  Temperature_mean * Rainfall_sum) |>
+  # Add quadratic terms for selected numeric predictors
+  step_poly(Temperature_mean, Windspeed_mean, Visibility_mean, Dew_Point_Temperature_mean, Solar_Radiation_mean, Rainfall_mean, Snowfall_mean, degree = 2)
+
+# Check the recipe
+recipe_3_prepped <- prep(recipe_3, training = bike_train)
+bike_train_transformed_poly <- bake(recipe_3_prepped, new_data = NULL)
+
+# View the transformed data
+print(bike_train_transformed_poly)
+```
+##     set up our linear model fit to use the “lm” engine
+```{r}
+# Creating a model with tidymodels
+bike_mod <- linear_reg() |>
+  set_engine("lm") |>
+  translate()
+  
+```
+### Workflow with Model1
+
+```{r}
+bike_wfl_1 <- workflow() |>
+  add_recipe(recipe_1) |>
+  add_model(bike_mod)
+```
+### Workflow with Model2
+
+```{r}
+bike_wfl_2 <- workflow() |>
+  add_recipe(recipe_2) |>
+  add_model(bike_mod)
+```
+### Workflow with Model3
+
+```{r}
+bike_wfl_3 <- workflow() |>
+  add_recipe(recipe_3) |>
+  add_model(bike_mod)
+```
+
+### Fit the models using 10 fold CV via fit_resamples() 
+```{r}
+set.seed(78)
+bike_10_fold <- vfold_cv(bike_train, 10)
+```
+### Fit with cross-validation on workflow 1
+```{r}
+bike_res_1 <- fit_resamples(bike_wfl_1, resamples = bike_10_fold, metrics = metric_set(rmse))
+
+```
+### Fit with cross-validation on workflow 2
+
+```{r}
+bike_res_2 <- fit_resamples(bike_wfl_2, resamples = bike_10_fold, metrics = metric_set(rmse))
+
+```
+### Fit with cross-validation on workflow 3
+
+```{r}
+bike_res_3 <- fit_resamples(bike_wfl_3, resamples = bike_10_fold, metrics = metric_set(rmse))
+
+```
+### Collect all the metrices
+
+```{r}
+metrics_1 <- collect_metrics(bike_res_1)
+metrics_2 <- collect_metrics(bike_res_2)
+metrics_3 <- collect_metrics(bike_res_3)
+```
+### Combine all the result into one data frame
+
+```{r}
+all_metrics <- rbind(
+  metrics_1 |> mutate(workflow = "Workflow 1"),
+  metrics_2 |> mutate(workflow = "Workflow 2"),
+  metrics_3 |> mutate(workflow = "Workflow 3")
+)
+all_metrics
+```
+
+### Select the best workflow 
+```{r}
+best_workflow <- all_metrics |>
+  filter(.metric == "rmse") |>
+  arrange(mean) |>
+  slice(1)
+
+print(best_workflow)
+```
+
+## Fit the best workflow 
+• Compute the RMSE metric on the test set.
+```{r}
+# Select the best workflow
+workflows <- list(bike_wfl_1, bike_wfl_2, bike_wfl_3)
+best_wfl <- workflows[[as.integer(gsub("Workflow ", "", best_workflow$workflow))]]
+
+# Fit the best model on the training data and evaluate on the test set
+final_fit <- best_wfl |>
+  last_fit(split = bike_split)
+
+# Get the RMSE for the test set
+final_metrics <- final_fit |>
+  collect_metrics()
+
+print(final_metrics)
+
+```
+# Extract Model coefficients
+### Using your ‘best’ model, fit the model to the entire training data set (use the last_fit() function).
+ • Obtain the final model (fit on the entire training set) coefficient table using extract_fit_parsnip() and tidy().
+
+```{r}
+# Extract the final model and get coefficients
+final_model <- extract_fit_parsnip(final_fit$.workflow[[1]])
+final_coefficients <- tidy(final_model)
+
+print(final_coefficients)
+
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+

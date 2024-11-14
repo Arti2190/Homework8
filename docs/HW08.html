@@ -57,24 +57,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="HW08_files/libs/clipboard/clipboard.min.js"></script>
-<script src="HW08_files/libs/quarto-html/quarto.js"></script>
-<script src="HW08_files/libs/quarto-html/popper.min.js"></script>
-<script src="HW08_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="HW08_files/libs/quarto-html/anchor.min.js"></script>
-<link href="HW08_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="HW08_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="HW08_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="HW08_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="HW08_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
 <body class="fullcontent">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -215,7 +252,7 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <li><ol type="1">
 <li>Checking the Data</li>
 </ol></li>
-<li>check for missing values</li>
+<li>check for missing values(Here is no missing values)</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(bike_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -418,6 +455,7 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 </div>
 <ul>
 <li>Show it in graph</li>
+<li>here we see the mean of bike rentals by seasons and Holiday</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bike_data_summary, <span class="fu">aes</span>(<span class="at">x =</span> Seasons, <span class="at">y =</span> Rented_Bike_Count_mean, <span class="at">fill =</span> Holiday)) <span class="sc">+</span></span>
@@ -693,12 +731,12 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <pre><code># A tibble: 6 × 16
   Rainfall_sum Snowfall_sum Temperature_mean Humidity_mean Windspeed_mean
          &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;
-1       -0.316       -0.223            1.03         -0.270         -0.412
-2        2.46        -0.223            0.915         1.61          -1.12 
-3       -0.316       -0.223            0.885         0.891          0.655
-4       -0.316       -0.223            0.935         0.223          1.20 
-5       -0.195       -0.223            0.791        -0.111          1.16 
-6       -0.316       -0.223            0.752        -0.668         -0.150
+1       -0.315       -0.223            1.12          0.143         -0.852
+2       -0.315       -0.223            1.08         -0.300         -0.342
+3        2.57        -0.223            0.954         1.54          -1.10 
+4       -0.315       -0.223            0.923         0.835          0.800
+5       -0.315       -0.223            0.975         0.181          1.38 
+6       -0.315       -0.223            1.01          0.779          0.333
 # ℹ 11 more variables: Visibility_mean &lt;dbl&gt;, Dew_Point_Temperature_mean &lt;dbl&gt;,
 #   Solar_Radiation_mean &lt;dbl&gt;, Rainfall_mean &lt;dbl&gt;, Snowfall_mean &lt;dbl&gt;,
 #   Rented_Bike_sum &lt;dbl&gt;, Seasons_Spring &lt;dbl&gt;, Seasons_Summer &lt;dbl&gt;,
@@ -756,16 +794,16 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <pre><code># A tibble: 273 × 23
    Rainfall_sum Snowfall_sum Temperature_mean Humidity_mean Windspeed_mean
           &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;
- 1       -0.316       -0.223            1.03         -0.270         -0.412
- 2        2.46        -0.223            0.915         1.61          -1.12 
- 3       -0.316       -0.223            0.885         0.891          0.655
- 4       -0.316       -0.223            0.935         0.223          1.20 
- 5       -0.195       -0.223            0.791        -0.111          1.16 
- 6       -0.316       -0.223            0.752        -0.668         -0.150
- 7       -0.316       -0.223            0.774        -0.615         -0.848
- 8       -0.316       -0.223            0.741        -0.717         -0.459
- 9       -0.316       -0.223            0.823        -0.448         -0.707
-10       -0.276       -0.223            0.903         0.591         -0.734
+ 1       -0.315       -0.223            1.12          0.143        -0.852 
+ 2       -0.315       -0.223            1.08         -0.300        -0.342 
+ 3        2.57        -0.223            0.954         1.54         -1.10  
+ 4       -0.315       -0.223            0.923         0.835         0.800 
+ 5       -0.315       -0.223            0.975         0.181         1.38  
+ 6       -0.315       -0.223            1.01          0.779         0.333 
+ 7       -0.190       -0.223            0.827        -0.145         1.34  
+ 8       -0.315       -0.223            0.786        -0.691        -0.0617
+ 9       -0.315       -0.223            0.896        -0.596        -0.241 
+10       -0.315       -0.223            0.775        -0.738        -0.392 
 # ℹ 263 more rows
 # ℹ 18 more variables: Visibility_mean &lt;dbl&gt;, Dew_Point_Temperature_mean &lt;dbl&gt;,
 #   Solar_Radiation_mean &lt;dbl&gt;, Rainfall_mean &lt;dbl&gt;, Snowfall_mean &lt;dbl&gt;,
@@ -801,16 +839,16 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <pre><code># A tibble: 273 × 30
    Rainfall_sum Snowfall_sum Humidity_mean Rented_Bike_sum Seasons_Spring
           &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;          &lt;dbl&gt;
- 1       -0.316       -0.223        -0.270           26881              0
- 2        2.46        -0.223         1.61            10802              0
- 3       -0.316       -0.223         0.891           29529              0
- 4       -0.316       -0.223         0.223           31114              0
- 5       -0.195       -0.223        -0.111           30381              0
- 6       -0.316       -0.223        -0.668           29813              0
- 7       -0.316       -0.223        -0.615           28354              0
- 8       -0.316       -0.223        -0.717           31694              0
- 9       -0.316       -0.223        -0.448           31809              0
-10       -0.276       -0.223         0.591           28199              0
+ 1       -0.315       -0.223         0.143           26010              0
+ 2       -0.315       -0.223        -0.300           26881              0
+ 3        2.57        -0.223         1.54            10802              0
+ 4       -0.315       -0.223         0.835           29529              0
+ 5       -0.315       -0.223         0.181           31114              0
+ 6       -0.315       -0.223         0.779           27838              0
+ 7       -0.190       -0.223        -0.145           30381              0
+ 8       -0.315       -0.223        -0.691           29813              0
+ 9       -0.315       -0.223        -0.596           30781              0
+10       -0.315       -0.223        -0.738           31694              0
 # ℹ 263 more rows
 # ℹ 25 more variables: Seasons_Summer &lt;dbl&gt;, Seasons_Winter &lt;dbl&gt;,
 #   Holiday_No.Holiday &lt;dbl&gt;, day_type_weekend &lt;dbl&gt;,
@@ -917,9 +955,9 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <pre><code># A tibble: 3 × 7
   .metric .estimator  mean     n std_err .config              workflow  
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;     
-1 rmse    standard   5375.    10    430. Preprocessor1_Model1 Workflow 1
-2 rmse    standard   5028.    10    506. Preprocessor1_Model1 Workflow 2
-3 rmse    standard   4957.    10    473. Preprocessor1_Model1 Workflow 3</code></pre>
+1 rmse    standard   5626.    10    453. Preprocessor1_Model1 Workflow 1
+2 rmse    standard   5041.    10    650. Preprocessor1_Model1 Workflow 2
+3 rmse    standard   5016.    10    650. Preprocessor1_Model1 Workflow 3</code></pre>
 </div>
 </div>
 </section>
@@ -936,13 +974,14 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <pre><code># A tibble: 1 × 7
   .metric .estimator  mean     n std_err .config              workflow  
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;     
-1 rmse    standard   4957.    10    473. Preprocessor1_Model1 Workflow 3</code></pre>
+1 rmse    standard   5016.    10    650. Preprocessor1_Model1 Workflow 3</code></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="fit-the-best-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="fit-the-best-workflow">Fit the best workflow</h2>
+<p>• Compute the RMSE metric on the test set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the best workflow</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>workflows <span class="ot">&lt;-</span> <span class="fu">list</span>(bike_wfl_1, bike_wfl_2, bike_wfl_3)</span>
@@ -963,14 +1002,17 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard    6098.    Preprocessor1_Model1
-2 rsq     standard       0.680 Preprocessor1_Model1</code></pre>
+1 rmse    standard    5075.    Preprocessor1_Model1
+2 rsq     standard       0.772 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="extract-model-coefficients" class="level1">
 <h1>Extract Model coefficients</h1>
+<section id="using-your-best-model-fit-the-model-to-the-entire-training-data-set-use-the-last_fit-function." class="level3">
+<h3 class="anchored" data-anchor-id="using-your-best-model-fit-the-model-to-the-entire-training-data-set-use-the-last_fit-function.">Using your ‘best’ model, fit the model to the entire training data set (use the last_fit() function).</h3>
+<p>• Obtain the final model (fit on the entire training set) coefficient table using extract_fit_parsnip() and tidy().</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the final model and get coefficients</span></span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> <span class="fu">extract_fit_parsnip</span>(final_fit<span class="sc">$</span>.workflow[[<span class="dv">1</span>]])</span>
@@ -979,121 +1021,27 @@ dbl (10): X2, X3, X4, X5, X6, X7, X8, X9, X10, X11
 <span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(final_coefficients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 5
-   term                                estimate std.error statistic    p.value
-   &lt;chr&gt;                                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
- 1 (Intercept)                           13468.     2810.     4.79  0.00000285
- 2 Rainfall_sum                          -1573.      636.    -2.48  0.0140    
- 3 Snowfall_sum                           -252.      352.    -0.717 0.474     
- 4 Humidity_mean                         -2000.     2385.    -0.838 0.403     
- 5 Seasons_Spring                         -606.     4521.    -0.134 0.893     
- 6 Seasons_Summer                        21985.     6608.     3.33  0.00101   
- 7 Seasons_Winter                        -1325.     4689.    -0.283 0.778     
- 8 Holiday_No.Holiday                     7901.     2556.     3.09  0.00222   
- 9 day_type_weekend                      -1945.      677.    -2.87  0.00440   
-10 Seasons_Spring_x_Holiday_No.Holiday   -3159.     4598.    -0.687 0.493     
+   term                                estimate std.error statistic   p.value
+   &lt;chr&gt;                                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept)                         13871.       3368.   4.12    0.0000522
+ 2 Rainfall_sum                        -1858.        708.  -2.63    0.00919  
+ 3 Snowfall_sum                         -344.        397.  -0.868   0.386    
+ 4 Humidity_mean                          -3.88     2819.  -0.00138 0.999    
+ 5 Seasons_Spring                       1216.       4532.   0.268   0.789    
+ 6 Seasons_Summer                      23354.       6988.   3.34    0.000962 
+ 7 Seasons_Winter                       -821.       5222.  -0.157   0.875    
+ 8 Holiday_No.Holiday                   7140.       3129.   2.28    0.0233   
+ 9 day_type_weekend                    -1772.        751.  -2.36    0.0191   
+10 Seasons_Spring_x_Holiday_No.Holiday -4722.       4633.  -1.02    0.309    
 # ℹ 20 more rows</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>bike_CV_fits1 <span class="ot">&lt;-</span> bike_wfl_1 <span class="sc">|&gt;</span></span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(bike_10_fold)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>→ A | warning: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</code></pre>
-</div>
-</div>
-<section id="fit-with-cross-validation-on-workflow-2-1" class="level3">
-<h3 class="anchored" data-anchor-id="fit-with-cross-validation-on-workflow-2-1">Fit with cross-validation on workflow 2</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>bike_CV_fits2 <span class="ot">&lt;-</span> bike_wfl_2 <span class="sc">|&gt;</span></span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(bike_10_fold)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>→ A | warning: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</code></pre>
-</div>
-</div>
+
+
 </section>
-<section id="fit-with-cross-validation-on-workflow-3-1" class="level3">
-<h3 class="anchored" data-anchor-id="fit-with-cross-validation-on-workflow-3-1">Fit with cross-validation on workflow 3</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>bike_CV_fits3 <span class="ot">&lt;-</span> bike_wfl_3 <span class="sc">|&gt;</span></span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(bike_10_fold)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>→ A | warning: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x10</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-</div>
-</section>
-<section id="fit-model" class="level2">
-<h2 class="anchored" data-anchor-id="fit-model">Fit model</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>metric_1 <span class="ot">&lt;-</span> bike_CV_fits1 <span class="sc">|&gt;</span></span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>metric_2 <span class="ot">&lt;-</span> bike_CV_fits2 <span class="sc">|&gt;</span></span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>metric_3 <span class="ot">&lt;-</span>  bike_CV_fits3 <span class="sc">|&gt;</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="print-all-the-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="print-all-the-metrics">Print all the metrics</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>all_metrics <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  metric_1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">workflow =</span> <span class="st">"Workflow 1"</span>),</span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  metric_2 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">workflow =</span> <span class="st">"Workflow 2"</span>),</span>
-<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>  metric_3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">workflow =</span> <span class="st">"Workflow 3"</span>)</span>
-<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>all_metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  .metric .estimator     mean     n  std_err .config              workflow  
-  &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;     
-1 rmse    standard   5375.       10 430.     Preprocessor1_Model1 Workflow 1
-2 rsq     standard      0.715    10   0.0431 Preprocessor1_Model1 Workflow 1
-3 rmse    standard   5028.       10 506.     Preprocessor1_Model1 Workflow 2
-4 rsq     standard      0.752    10   0.0432 Preprocessor1_Model1 Workflow 2
-5 rmse    standard   4957.       10 473.     Preprocessor1_Model1 Workflow 3
-6 rsq     standard      0.761    10   0.0424 Preprocessor1_Model1 Workflow 3</code></pre>
-</div>
-</div>
-</section>
-<section id="using-your-best-model-fit-the-model-to-the-entire-training-data-set-use-the-last_fit-function." class="level3">
-<h3 class="anchored" data-anchor-id="using-your-best-model-fit-the-model-to-the-entire-training-data-set-use-the-last_fit-function.">Using your ‘best’ model, fit the model to the entire training data set (use the last_fit() function).</h3>
-<p>• Compute the RMSE metric on the test set. • Obtain the final model (fit on the entire training set) coefficient table using extract_fit_parsnip() and tidy().</p>
-</section>
-</section>
-</section>
-<section id="check-the-rmse" class="level1">
-<h1>Check the RMSE</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>rmse_workflow <span class="ot">&lt;-</span> all_metrics <span class="sc">|&gt;</span></span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#sort the data in ascending order</span></span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mean) <span class="sc">|&gt;</span> </span>
-<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the first row of the all_metrics data frame</span></span>
-<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span>
-<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rmse_workflow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 7
-  .metric .estimator  mean     n std_err .config              workflow  
-  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;     
-1 rmse    standard   4957.    10    473. Preprocessor1_Model1 Workflow 3</code></pre>
-</div>
-</div>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
